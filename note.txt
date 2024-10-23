@@ -1,0 +1,6 @@
+To use prisma
+You start by installing it "npm i prisma @prisma/client"
+After you write "npx prisma init"
+You can always write your models in it
+After that you write "npx prisma migrate dev --name CreateUsersTable"
+NOTE: CreateUserTable is the name of the migration. It could be anything
