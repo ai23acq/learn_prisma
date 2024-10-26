@@ -24,3 +24,8 @@ export class NotFoundException extends HttpException{
         super(message, errorCode, statusCode, null)
     }
 }
+export class UnauthorizedException extends HttpException{
+    constructor(message: string, errorCode: number, statusCode: number, errors?: any){
+        super(message, errorCode, statusCode, errors)
+    }
+}

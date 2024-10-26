@@ -6,6 +6,7 @@ import { JWT_SECRET } from "../secret";
 import { BadRequestsException, NotFoundException, UnprocessableException } from "../exceptions/httpRequests";
 import { ErrorCode, StatusCode } from "../exceptions/root";
 import { SignUpSchema } from "../schema/users";
+import { User } from "@prisma/client";
 
 export const signup = async(req:Request, res:Response, next:NextFunction) => {
     SignUpSchema.parse(req.body)
@@ -41,5 +42,6 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
 }
 
 export const getMe = async(req:Request, res:Response, next:NextFunction) => {
-    
+    const user = req.user as any
+    res.json(user)
 }
