@@ -10,7 +10,7 @@ const authMiddleware = async(req:Request, res:Response, next:NextFunction) => {
     const token = req.headers.authorization as string
     // 2. if token is not present, throw an error of unauthorized
     if(!token){
-        return next(new UnauthorizedException("unatorized! No Token", ErrorCode.UNAUTHORIZED_EXCEPTION, StatusCode.UNAUTHORIZED))
+        return next(new UnauthorizedException("Unatorized! No Token", ErrorCode.UNAUTHORIZED_EXCEPTION, StatusCode.UNAUTHORIZED))
     }
     try {
         // 3. if the token is present, verify the token and extract the payload

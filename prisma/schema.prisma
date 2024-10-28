@@ -12,14 +12,64 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
+enum Role{
+  ADMIN
+  USER
+}
 model User {
   id Int @id @default(autoincrement())
   name String
   email String @unique
   password String 
+  role Role @default(USER)
+  defaultBillingAddress Int?
+  defaultShippingAddress Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products Product[] //one-to-many relation with product
+  address Address?
+  cartItem CartItem[]
+
+  @@map("users")
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  price Decimal
+  tags String
+  createdBy Int?
+  creator User? @relation(fields: [createdBy], references: [id])
+  cartItem CartItem[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("users")
+  @@map("products")
+}
+
+model Address{
+  id Int @id @default(autoincrement())
+  lineOne String
+  lineTwo String?
+  city String
+  country String
+  postcode String?
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("addresses")
+}
+
+model CartItem{
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+  quantity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
