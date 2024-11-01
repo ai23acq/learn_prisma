@@ -122,3 +122,45 @@ export const updateUser = async(req:Request, res:Response) => {
     })
     res.json(updatedUser)
 }
+
+export const listUsers = async(req:Request, res:Response) => {
+    const skip = parseInt(req.query.skip?.toString() ?? '0');
+    // const limit = parseInt(req.query.limit?.toString() ?? '10');
+    const count = await prismaClient.user.count()
+    const users = await prismaClient.user.findMany({
+        skip,
+        take: 5, //you can actually pass limit here
+    })
+    res.json({count, users})
+}
+
+export const getUserById = async(req:Request, res:Response) => {
+    try {
+        const user = await prismaClient.user.findFirstOrThrow({
+            where: {
+                id: +req.params.id
+            },
+            include: {
+                address: true
+            }
+        })
+    } catch (error) {
+        throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND, StatusCode.NOT_FOUND)
+    }
+}
+
+export const changeUserRole = async(req:Request, res:Response) => {
+    // validation schema for role and it will be of type enum
+    try {
+        const user = await prismaClient.user.update({
+            where: {
+                id: +req.params.id
+            },
+            data: {
+                role: req.body.role
+            }
+        })
+    } catch (error) {
+        throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND, StatusCode.NOT_FOUND)
+    }
+}
