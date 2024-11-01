@@ -78,3 +78,21 @@ export const getSingleProduct = async(req:Request, res:Response, next:NextFuncti
         next(new NotFoundException("Product not found!", ErrorCode.USER_NOT_FOUND, StatusCode.NOT_FOUND))
     }
 }
+
+export const searchProducts = async(req:Request, res:Response) => {
+    //implement pagination here
+    const products = await prismaClient.product.findMany({
+        where: {
+            name: {
+                search: req.query.q?.toString()
+            },
+            description: {
+                search: req.query.q?.toString()
+            },
+            tags: {
+                search: req.query.q?.toString()
+            }
+        }
+    })
+    res.json(products)
+}

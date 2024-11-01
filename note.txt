@@ -4,3 +4,5 @@ After you write "npx prisma init"
 You can always write your models in it
 After that you write "npx prisma migrate dev --name CreateUsersTable"
 NOTE: CreateUserTable is the name of the migration. It could be anything
+Whenever you use the query in the backend, you use the '?' sign to call what you are querying, as in ?status=ACCEPTED
+NOTE: As of now, the fulltext is only supported when using MySQL, it doesnt work with Postgres, SQLLite and MongoDB

@@ -11,9 +11,9 @@ authRoutes.post("/login", errorHandler(login))
 authRoutes.get('/me', authMiddleware, errorHandler(getMe))
 authRoutes.post('/address', authMiddleware, errorHandler(addAddress))
 authRoutes.get('/address', authMiddleware, errorHandler(listAddresses))
-authRoutes.put("/role", authMiddleware, adminMiddleware, errorHandler(changeUserRole))
 authRoutes.put("/allusers", authMiddleware, adminMiddleware, errorHandler(listUsers))
 authRoutes.put("/:id", authMiddleware, adminMiddleware, errorHandler(getUserById))
+authRoutes.put("/:id/role", authMiddleware, adminMiddleware, errorHandler(changeUserRole))
 authRoutes.delete('/address/:id', authMiddleware, errorHandler(deleteAddress))
 
 export default authRoutes
